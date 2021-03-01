@@ -187,7 +187,6 @@ _setupPlugins() {
     else
         editLastMessage "\t$1 Plugins Disabled !"
     fi
-    deleteLastMessage
 }
 
 _checkUnoffPlugins() {
@@ -195,7 +194,11 @@ _checkUnoffPlugins() {
 }
 
 _checkCustomPlugins() {
-    _setupPlugins Custom https://github.com/.+/.+ $CUSTOM_PLUGINS_REPO
+    _setupPlugins Custom "https://([0-9a-f]{40}@)?github.com/.+/.+" $CUSTOM_PLUGINS_REPO
+}
+
+_flushMessages() {
+    deleteLastMessage
 }
 
 assertPrerequisites() {
@@ -215,4 +218,5 @@ assertEnvironment() {
     _checkUpstreamRepo
     _checkUnoffPlugins
     _checkCustomPlugins
+    _flushMessages
 }
